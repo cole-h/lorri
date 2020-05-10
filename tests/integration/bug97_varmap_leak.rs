@@ -32,6 +32,7 @@ fn bug97_varmap_leak() {
         "origExtraClosure",
         // Nix-set variables
         "IN_NIX_SHELL",
+        "IN_LORRI_SHELL",
         "NIX_BUILD_CORES",
         "NIX_BUILD_TOP",
         "NIX_LOG_FD",
