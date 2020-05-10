@@ -46,7 +46,7 @@ jobs:
           command: fmt
           args: --all -- --check
       - name: Build
-        run: nix-shell --run 'cargo build'
+        run: nix-shell --run 'cargo build' #
       - name: Clippy
         uses: actions-rs/clippy-check@v1
         with:
