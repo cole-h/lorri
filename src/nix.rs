@@ -35,7 +35,6 @@
 use crate::error::BuildError;
 use crate::osstrlines;
 use crossbeam_channel as chan;
-use serde_json;
 use slog_scope::debug;
 use std::collections::HashMap;
 use std::ffi::OsStr;
