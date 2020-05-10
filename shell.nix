@@ -180,13 +180,13 @@ pkgs.mkShell (
     );
 
     passthru.allBuildInputs = allBuildInputs;
-
-    preferLocalBuild = true;
-    allowSubstitutes = false;
   }
   // (
     if isDevelopmentShell then {
       inherit RUST_SRC_PATH CARGO_INSTALL_ROOT HISTFILE;
+
+      preferLocalBuild = true;
+      allowSubstitutes = false;
     } else {}
   )
 )
