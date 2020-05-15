@@ -56,6 +56,8 @@ let
     # Travis doesn’t know `nix-env` otherwise.
     pkgs.nix
   ] ++ pkgs.stdenv.lib.optionals pkgs.stdenv.isDarwin [
+    (pkgs.rustChannelOf { channel = "1.37.0"; }).clippy-preview
+    (pkgs.rustChannelOf { channel = "1.37.0"; }).rustfmt-preview
     pkgs.darwin.Security
     pkgs.darwin.apple_sdk.frameworks.CoreServices
     pkgs.darwin.apple_sdk.frameworks.CoreFoundation

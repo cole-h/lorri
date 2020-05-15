@@ -38,14 +38,14 @@ jobs:
       - name: Shell (cache inputs)
         run: nix-shell
       - name: Format
-        if: runner.os != 'macOS' # sometimes, darwin doesn't have cargo-fmt
+        # if: runner.os != 'macOS' # sometimes, darwin doesn't have cargo-fmt
         run: |
           ./nix/fmt.sh
           nix-shell --run 'cargo fmt --all -- --check' --arg isDevelopmentShell false
       - name: Carnix
         run: ./nix/update-carnix.sh
       - name: Clippy
-        if: runner.os != 'macOS' # sometimes, darwin doesn't have cargo-clippy
+        # if: runner.os != 'macOS' # sometimes, darwin doesn't have cargo-clippy
         run: nix-shell --run 'cargo clippy --all-features' --arg isDevelopmentShell false
         env:
             RUSTFLAGS: "-D warnings"
