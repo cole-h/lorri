@@ -35,36 +35,15 @@ jobs:
       #   with:
       #     name: lorri-test
       #     signingKey: "${{ secrets.CACHIX_SIGNING_KEY }}"
-      - name: Shell (cache inputs)
-        run: nix-shell
       - name: Format
         # if: runner.os != 'macOS' # sometimes, darwin doesn't have cargo-fmt
         run: |
           ./nix/fmt.sh
+          nix-shell --run 'cargo -V' --arg isDevelopmentShell false
+          nix-shell --run 'cargo --list' --arg isDevelopmentShell false
           nix-shell --run 'cargo fmt --all -- --check' --arg isDevelopmentShell false
-      - name: Carnix
-        run: ./nix/update-carnix.sh
       - name: Clippy
         # if: runner.os != 'macOS' # sometimes, darwin doesn't have cargo-clippy
         run: nix-shell --run 'cargo clippy --all-features' --arg isDevelopmentShell false
         env:
             RUSTFLAGS: "-D warnings"
-      - name: Test
-        run: |
-          ./script-tests/run-all.sh
-          nix-shell --run 'cargo test' --arg isDevelopmentShell false
-      - name: Build
-        run: nix-shell --run 'cargo build' --arg isDevelopmentShell false
-
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Nix
-        uses: cachix/install-nix-action@v7
-      - name: Build
-        run: nix-build
