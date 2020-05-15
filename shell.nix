@@ -30,7 +30,8 @@ let
 
   # Rust from the Mozilla overlay doesn't automatically come with the
   # `rust-src` component, so we need an override to add it.
-  lorriRust = (pkgs.rustChannelOf { channel = "1.37.0"; }).rust.override {
+  lorriRustChannel = pkgs.rustChannelOf { channel = "1.37.0"; };
+  lorriRust = lorriRustChannel.rust.override {
     extensions = [ "rust-src" ];
   };
 
@@ -56,8 +57,8 @@ let
     # Travis doesn’t know `nix-env` otherwise.
     pkgs.nix
   ] ++ pkgs.stdenv.lib.optionals pkgs.stdenv.isDarwin [
-    (pkgs.rustChannelOf { channel = "1.37.0"; }).clippy-preview
-    (pkgs.rustChannelOf { channel = "1.37.0"; }).rustfmt-preview
+    lorriRustChannel.clippy-preview
+    lorriRustChannel.rustfmt-preview
     pkgs.darwin.Security
     pkgs.darwin.apple_sdk.frameworks.CoreServices
     pkgs.darwin.apple_sdk.frameworks.CoreFoundation
